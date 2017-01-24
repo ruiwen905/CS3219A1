@@ -41,12 +41,13 @@ public class ADT {
 		CircularShift circularShift = new CircularShift(inputLines, wordsToIgnore);
 		ArrayList<String> shiftedLines = circularShift.getShiftedLines();
 		
-		for (int i = 0; i < shiftedLines.size(); i++) {
-			System.out.println(shiftedLines.get(i));
-		}
-		
 		// Alphabetize shifted lines in alphabetical order
+		Alphabetizer alphabetizer = new Alphabetizer(shiftedLines);
+		ArrayList<String> orderedLines = alphabetizer.getAlphabeticallyOrderedLines();
 		
+		for (int i = 0; i < orderedLines.size(); i++) {
+			System.out.println(orderedLines.get(i));
+		}
 		// Perform output in stated file
 	}
 
