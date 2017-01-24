@@ -3,12 +3,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This is the master control of the KWIC program that controls the sequence and handle exceptions.
+ * @author weijieseow
+ */
 public class ADT {
-	
-	/**
-	 * This is the master control of the KWIC program.
-	 * @author weijieseow
-	 */
 
 	public static void main(String[] args) {
 		
@@ -32,11 +31,31 @@ public class ADT {
 		System.out.print("Enter output file name: ");
 		outputFileName = sc.next();
 		
-		System.out.println(inputFileName + " " + wordsToIgnoreFileName + " " + outputFileName);
-		
 		sc.close();
 		
-		ArrayList<String> inputLines = null;
+		// Retrieve needed information for KWIC
+		ArrayList<String> inputLines = readInputFile(inputFileName);
+		ArrayList<String> wordsToIgnore = readInputFile(wordsToIgnoreFileName);
+		
+		// Perform circular shift to each line
+		CircularShift circularShift = new CircularShift(inputLines, wordsToIgnore);
+		ArrayList<String> shiftedLines = circularShift.getShiftedLines();
+		
+		for (int i = 0; i < shiftedLines.size(); i++) {
+			System.out.println(shiftedLines.get(i));
+		}
+		
+		// Alphabetize shifted lines in alphabetical order
+		
+		// Perform output in stated file
+	}
+
+	/**
+	 * Read from input file and store the content as Strings in a list
+	 */
+	private static ArrayList<String> readInputFile(String inputFileName) {
+		
+		ArrayList<String> inputLines = new ArrayList<String>();
 		
 		try {
 			inputLines = Input.readFromFile(inputFileName);
@@ -48,10 +67,7 @@ public class ADT {
 			System.exit(1);
 		}
 		
-		for (int i = 0; i < inputLines.size(); i++) {
-			System.out.println(inputLines.get(i));
-		}
-		
+		return inputLines;
 	}
 
 	
