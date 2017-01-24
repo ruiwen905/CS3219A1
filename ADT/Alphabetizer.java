@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This is the Alphabetizer module for KWIC program.
+ * 
+ * @author weijieseow
+ *
+ */
 public class Alphabetizer {
 
 	private ArrayList<String> lines;

@@ -3,10 +3,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * This is the Circular Shift Module for KWIC.
+ * This is the Circular Shift Module for KWIC program.
  * 
  * @author weijieseow
- *
  */
 public class CircularShift {
 
