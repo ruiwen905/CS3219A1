@@ -1,5 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,7 +36,17 @@ public class ADT {
 		
 		sc.close();
 		
-		ArrayList<String> inputLines = readFromFile(inputFileName);
+		ArrayList<String> inputLines = null;
+		
+		try {
+			inputLines = Input.readFromFile(inputFileName);
+		} catch (FileNotFoundException e) {
+			System.out.println("Unable to locate input file. Please check that the correct file name is entered.");
+			System.exit(1);
+		} catch (IOException e) {
+			System.out.println("Exception when reading the input file. Please try again.");
+			System.exit(1);
+		}
 		
 		for (int i = 0; i < inputLines.size(); i++) {
 			System.out.println(inputLines.get(i));
@@ -44,29 +54,5 @@ public class ADT {
 		
 	}
 
-	private static ArrayList<String> readFromFile(String inputFileName) {
-		
-		ArrayList<String> records = new ArrayList<String>();
-		  try
-		  {
-		    BufferedReader reader = new BufferedReader(new FileReader(inputFileName));
-		    String line;
-		    while ((line = reader.readLine()) != null)
-		    {
-		      records.add(line);
-		    }
-		    reader.close();
-		    return records;
-		  }
-		  catch (Exception e)
-		  {
-		   /* System.err.format("Exception occurred trying to read '%s'.", inputFileName);
-		    e.printStackTrace();
-		    return null; */
-			  System.out.println("Exception occurred trying to read "+ inputFileName + ".");
-			  System.exit(1);
-			  
-			  return null;
-		  }
-	}
+	
 }
