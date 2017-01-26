@@ -16,7 +16,7 @@ public class Output {
 		
 		File file = new File(fileName);
 		 
-        // if file doesnt exists, then create it
+        // If file doesn't exists, then create it
         if (!file.exists()) {
            file.createNewFile();
         }
