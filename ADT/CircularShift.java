@@ -11,17 +11,30 @@ public class CircularShift {
 
 	private ArrayList<String> inputLines;
 	private ArrayList<String> wordsToIgnore;
+	private ArrayList<String> shiftedLines;
 
 	public CircularShift(ArrayList<String> inputLines, ArrayList<String> wordsToIgnore) {
 		this.inputLines = inputLines;
 		this.wordsToIgnore = wordsToIgnore;
+		shiftedLines = new ArrayList<String>();
 	}
 
 	/**
 	 * Retrieve circular shifted lines 
 	 */
 	public ArrayList<String> getShiftedLines() {
-		ArrayList<String> shiftedLines = new ArrayList<String>();
+		
+		if (shiftedLines.isEmpty()) {
+			circularShift();
+		}
+		
+		return shiftedLines;
+	}
+
+	/**
+	 * Perform circular shift on the lines
+	 */
+	private void circularShift() {
 		Queue<String> queue = new LinkedList<String>();
 
 		// Going through all the lines
@@ -51,13 +64,10 @@ public class CircularShift {
 				queue.offer(modifiedLine);
 			}
 		}
-
-		return shiftedLines;
 	}
 
 	/**
 	 * Brings the first word to the end of the string
-	 *
 	 */
 	private String appendFirstWordToEnd(String[] wordsInLine, String firstWord) {
 
