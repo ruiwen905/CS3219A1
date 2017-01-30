@@ -34,6 +34,8 @@ public class CircularShift {
 	/**
 	 * Perform circular shift on the lines
 	 */
+	
+	/*
 	private void circularShift() {
 		Queue<String> queue = new LinkedList<String>();
 
@@ -62,6 +64,39 @@ public class CircularShift {
 				}
 				String modifiedLine = appendFirstWordToEnd(wordsInLine, firstWord);
 				queue.offer(modifiedLine);
+			}
+		}
+	} */
+	
+	private void circularShift() {
+		
+		// Going through all the lines
+		for (int i = 0; i < inputLines.size(); i++) {
+			
+			String line = inputLines.get(i);
+			String[] words = line.split(" ");
+			
+			int lengthOfLine = words.length;
+			
+			// Going through each word in line
+			for (int j = 0; j < lengthOfLine; j++) {
+				
+				String firstWord = words[j];
+				
+				// Add the shifted line if the first word is not a ignored word
+				if (!wordsToIgnore.contains(firstWord.toLowerCase())) {
+					
+					String keywordLine = words[j];
+					
+					int start = (j + 1) % lengthOfLine;
+					
+					while (start != j) {
+						keywordLine = keywordLine + " " + words[start];
+						start = (start + 1) % lengthOfLine;
+					}
+					
+					shiftedLines.add(keywordLine);
+				}
 			}
 		}
 	}
