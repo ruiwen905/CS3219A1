@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * This is the Circular Shift Module for KWIC program.
@@ -11,65 +9,69 @@ public class CircularShift {
 
 	private ArrayList<String> inputLines;
 	private ArrayList<String> wordsToIgnore;
+	private ArrayList<String> shiftedLines;
 
 	public CircularShift(ArrayList<String> inputLines, ArrayList<String> wordsToIgnore) {
 		this.inputLines = inputLines;
 		this.wordsToIgnore = wordsToIgnore;
+		shiftedLines = new ArrayList<String>();
 	}
 
 	/**
 	 * Retrieve circular shifted lines 
 	 */
 	public ArrayList<String> getShiftedLines() {
-		ArrayList<String> shiftedLines = new ArrayList<String>();
-		Queue<String> queue = new LinkedList<String>();
-
-		// Going through all the lines
-		for (int i = 0; i < inputLines.size(); i++) {
-			queue.offer(inputLines.get(i));
+		
+		if (shiftedLines.isEmpty()) {
+			circularShift();
 		}
-
-		// Using a queue to go through all possible orders of circular shift 
-		// by appending the first word to the end of the string
-		while (!queue.isEmpty()) {
-
-			String line = queue.poll();
-			
-			// Discarding lines that is duplicated
-			if (!shiftedLines.contains(line)) {
-				
-				// Splitting each line into words
-				String[] wordsInLine = line.split(" ");
-
-				String firstWord = wordsInLine[0];
-				
-				// Add the shifted line if the first word is not a ignored word
-				if (!wordsToIgnore.contains(firstWord.toLowerCase())) {
-					shiftedLines.add(line);
-				}
-				String modifiedLine = appendFirstWordToEnd(wordsInLine, firstWord);
-				queue.offer(modifiedLine);
-			}
-		}
-
+		
 		return shiftedLines;
 	}
 
 	/**
-	 * Brings the first word to the end of the string
-	 *
-	 */
-	private String appendFirstWordToEnd(String[] wordsInLine, String firstWord) {
-
-		String result = "";
-
-		for (int i = 1; i < wordsInLine.length; i++) {
-			result += wordsInLine[i];
-			result += " ";
+	 * Perform circular shift on the lines
+	 */	
+	private void circularShift() {
+		
+		// Going through all the lines
+		for (int i = 0; i < inputLines.size(); i++) {
+			
+			String line = inputLines.get(i);
+			String[] words = line.split(" ");
+			
+			int lengthOfLine = words.length;
+			
+			// Going through each word in line
+			for (int j = 0; j < lengthOfLine; j++) {
+				
+				String firstWord = words[j];
+				
+				// Add the shifted line if the first word is not a ignored word
+				if (!wordsToIgnore.contains(firstWord.toLowerCase())) {
+					
+					// Forming the correct line by appending the words in order
+					String keywordLine = words[j];
+					
+					// Capitalize first letter of keyword
+					keywordLine = keywordLine.substring(0, 1).toUpperCase() + keywordLine.substring(1).toLowerCase();
+					
+					int start = (j + 1) % lengthOfLine;
+					
+					while (start != j) {
+						
+						// making ignore words lower case
+						if (wordsToIgnore.contains(words[start].toLowerCase())) {
+							words[start] = words[start].toLowerCase();
+						}
+						
+						keywordLine = keywordLine + " " + words[start];
+						start = (start + 1) % lengthOfLine;
+					}
+					
+					shiftedLines.add(keywordLine);
+				}
+			}
 		}
-
-		result += firstWord;
-
-		return result;
 	}
 }
