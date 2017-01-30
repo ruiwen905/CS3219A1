@@ -53,9 +53,18 @@ public class CircularShift {
 					// Forming the correct line by appending the words in order
 					String keywordLine = words[j];
 					
+					// Capitalize first letter of keyword
+					keywordLine = keywordLine.substring(0, 1).toUpperCase() + keywordLine.substring(1).toLowerCase();
+					
 					int start = (j + 1) % lengthOfLine;
 					
 					while (start != j) {
+						
+						// making ignore words lower case
+						if (wordsToIgnore.contains(words[start].toLowerCase())) {
+							words[start] = words[start].toLowerCase();
+						}
+						
 						keywordLine = keywordLine + " " + words[start];
 						start = (start + 1) % lengthOfLine;
 					}
